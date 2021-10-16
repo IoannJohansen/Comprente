@@ -19,11 +19,11 @@ public class RentList {
     private int Id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "Id")
+    @JoinColumn(referencedColumnName = "Id")
     private User user;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "Id")
+    @JoinColumn(referencedColumnName = "Id")
     private Technique technique;
 
     @NotNull
@@ -33,10 +33,10 @@ public class RentList {
     private Date FinishiRentDate;
 
     @OneToOne
-    @JoinColumn("Id")
+    @JoinColumn(referencedColumnName = "Id")
     private Bill bill;
 
     @ManyToOne
-    @JoinColumn(name = "Id")
+    @JoinColumn(referencedColumnName = "Id")
     private RentState rentState;
 }

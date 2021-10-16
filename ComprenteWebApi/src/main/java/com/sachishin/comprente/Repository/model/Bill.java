@@ -23,7 +23,7 @@ public class Bill {
     private int price;
 
     @ManyToOne(optional = false)
-    @JoinColumn("Id")
+    @JoinColumn(referencedColumnName = "Id")
     private User user;
 
     @NotNull

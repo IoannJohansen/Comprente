@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
 
@@ -18,16 +19,17 @@ public class FeedBack {
     private int Id;
 
     @ManyToOne(optional = false)
-    @JoinColumn("Id")
+    @JoinColumn(referencedColumnName = "Id")
     private User user;
 
     //TODO: ADD RANGE(1,5)
     @NotNull
+
     private int rating;
 
     private String message;
 
     @ManyToOne(optional = false)
-    @JoinColumn("Id")
+    @JoinColumn(referencedColumnName = "Id")
     private Technique technique;
 }

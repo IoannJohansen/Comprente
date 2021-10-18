@@ -17,7 +17,7 @@ import java.util.Date;
 public class Technique {
     @Id
     @GeneratedValue
-    private int Id;
+    private long Id;
     @NotNull
     private String name;
     @NotNull
@@ -25,7 +25,7 @@ public class Technique {
     @NotNull
     private Date datePublish;
     @NotNull
-    private int rentPrice;
+    private long rentPrice;
 
     @OneToMany(mappedBy = "Id", fetch = FetchType.LAZY)
     private Collection<Images> images;

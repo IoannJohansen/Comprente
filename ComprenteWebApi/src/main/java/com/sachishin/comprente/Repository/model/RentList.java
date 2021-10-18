@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import javax.validation.constraints.Min;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.Date;
 public class RentList {
     @Id
     @GeneratedValue
-    private int Id;
+    private long Id;
 
     @ManyToOne(optional = false)
     @JoinColumn(referencedColumnName = "Id")

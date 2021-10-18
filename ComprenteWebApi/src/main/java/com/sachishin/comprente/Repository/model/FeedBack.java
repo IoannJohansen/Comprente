@@ -4,9 +4,10 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @NoArgsConstructor
@@ -16,7 +17,7 @@ import javax.persistence.*;
 public class FeedBack {
     @Id
     @GeneratedValue
-    private int Id;
+    private long Id;
 
     @ManyToOne(optional = false)
     @JoinColumn(referencedColumnName = "Id")
@@ -24,7 +25,8 @@ public class FeedBack {
 
     //TODO: ADD RANGE(1,5)
     @NotNull
-
+    @Min(1)
+    @Max(5)
     private int rating;
 
     private String message;

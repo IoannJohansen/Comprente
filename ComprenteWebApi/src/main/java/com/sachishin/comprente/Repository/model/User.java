@@ -1,15 +1,18 @@
 package com.sachishin.comprente.Repository.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Check;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
+import java.util.Collection;
 
 @Entity
 @NoArgsConstructor
@@ -22,9 +25,12 @@ public class User {
     @GeneratedValue
     private long Id;
     @NotNull
+    @Size(min=2, max=30)
     private String name;
     @NotNull
     private String hashPassword;
     @NotNull
+    @Email
+    @Size(min=4, max=30)
     private String email;
 }

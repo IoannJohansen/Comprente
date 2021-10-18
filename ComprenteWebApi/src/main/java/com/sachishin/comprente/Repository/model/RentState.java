@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "RentState")
 public class RentState {
     @Id
-    private int Id;
+    private long Id;
     @NotNull
     private String name;
     @NotNull

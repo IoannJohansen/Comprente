@@ -17,10 +17,10 @@ import java.util.Date;
 public class Bill {
     @Id
     @GeneratedValue
-    private int Id;
+    private long Id;
 
     @NotNull
-    private int price;
+    private long price;
 
     @ManyToOne(optional = false)
     @JoinColumn(referencedColumnName = "Id")

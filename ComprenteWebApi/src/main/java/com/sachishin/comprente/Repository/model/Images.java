@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.naming.Name;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -23,4 +20,8 @@ public class Images {
 
     @NotNull
     private String path;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(referencedColumnName = "id")
+    private Technique technique;
 }

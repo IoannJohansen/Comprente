@@ -1,6 +1,6 @@
 package com.sachishin.comprente.Service.impl;
 
-import com.sachishin.comprente.Repository.impl.UserRepository;
+import com.sachishin.comprente.Repository.UserRepository;
 import com.sachishin.comprente.Repository.model.User;
 import com.sachishin.comprente.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -21,7 +20,7 @@ public class UserServiceImpl implements UserService {
         User res = null;
         try {
             res =  userRepository.getById(id);
-            res.getEmail();
+            res.getName();
         }catch (Exception ex){
             return null;
         }
@@ -54,6 +53,10 @@ public class UserServiceImpl implements UserService {
 
     public boolean isUserExist(User user) {
         return findByName(user.getName()) != null;
+    }
+
+    public User existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
 }

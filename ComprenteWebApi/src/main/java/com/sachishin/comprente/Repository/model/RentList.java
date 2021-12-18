@@ -31,13 +31,11 @@ public class RentList {
     private Date giveDate;
 
     @NotNull
-    private Date FinishiRentDate;
+    private Date FinishRentDate;
 
     @OneToOne
     @JoinColumn(referencedColumnName = "Id")
     private Bill bill;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "Id")
-    private RentState rentState;
+    private int rentStatus;
 }

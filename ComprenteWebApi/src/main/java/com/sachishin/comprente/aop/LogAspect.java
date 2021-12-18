@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class LogAspect {
-    @Pointcut("execution(public * com.sachishin.comprente.Web.controller.UserController.*(..))")
+    @Pointcut("execution(public * com.sachishin.comprente.Web.controller.AuthController.*(..))")
     public void callAtUserController() {
     }
 

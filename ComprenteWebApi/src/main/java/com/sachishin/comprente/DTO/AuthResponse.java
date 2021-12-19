@@ -9,9 +9,10 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterResponse {
+public class AuthResponse {
     Boolean success;
     String token;
     String username;
     String role;
 }
+

@@ -3,6 +3,9 @@ package com.sachishin.comprente.DTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 @Setter
 @Getter
 @ToString
@@ -10,16 +13,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
+    @NotBlank(message = "login must be specified")
     private String login;
-    private String password;
-    private String email;
 
-    @Override
-    public String toString() {
-        return "RegisterRequest{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+    @NotBlank(message = "Password must be specified")
+    private String password;
+
+    @NotBlank(message = "Email must be specified")
+    @Email(message = "Invalid email")
+    private String email;
 }

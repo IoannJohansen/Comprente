@@ -1,31 +1,28 @@
 package com.sachishin.comprente.Service.impl;
 
+import com.sachishin.comprente.DTO.AuthRequest;
+import com.sachishin.comprente.Exception.AuthException;
 import com.sachishin.comprente.Exception.DuplicateUserException;
 import com.sachishin.comprente.Repository.UserRepository;
 import com.sachishin.comprente.Repository.model.User;
 import com.sachishin.comprente.Service.UserService;
 import com.sachishin.comprente.DTO.RegisterRequest;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-    private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
-    public User findByName(String name) {
+    public User findByUsername(String name) {
         return userRepository.findByUsername(name);
     }
 
@@ -42,8 +39,14 @@ public class UserServiceImpl implements UserService {
             userRepository.save(newUser);
             return newUser;
         }catch(DuplicateUserException ex){
-            log.error("Duplicating username");
             return null;
         }
+    }
+
+    @Override
+    public User Login(AuthRequest authDto) throws AuthException {
+        var user = userRepository.findByUsername(authDto.getLogin());
+        if(user==null)throw new AuthException();
+        return user;
     }
 }

@@ -1,14 +1,20 @@
 package com.sachishin.comprente.DTO;
 
-public class AuthRequest {
-    public String login;
-    public String password;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
-    @Override
-    public String toString() {
-        return "AuthRequest{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+import javax.validation.constraints.NotBlank;
+
+@Setter
+@Getter
+@ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuthRequest {
+    @NotBlank(message = "login must be specified")
+    private String login;
+
+    @NotBlank(message = "Password must be specified")
+    private String password;
 }

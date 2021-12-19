@@ -26,13 +26,16 @@ public class User {
     private long Id;
 
     @NotNull
-    @Size(min=2, max=30)
-    private String name;
-
-    @NotNull
     @Email
     @Size(min=4, max=30)
     private String email;
+
+    @NotNull
+    private String role;
+
+    @NotNull
+    @Size(min=5, max=30)
+    private String username;
 
     @NotNull
     private String hashPassword;

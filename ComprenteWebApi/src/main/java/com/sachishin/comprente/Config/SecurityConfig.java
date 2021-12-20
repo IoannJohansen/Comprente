@@ -20,7 +20,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtFilter jwtFilter;
 
-
     @Autowired
     private CustomUsersDetailsService customUsersDetailsService;
 
@@ -32,8 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/tech/test").hasAuthority("USER")
-                .antMatchers("/api/auth/test").hasAuthority("USER")
+//                .antMatchers("/api/tech/*").hasAuthority("USER")
                 .antMatchers("/api/auth/*","/swagger-ui.html").permitAll()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

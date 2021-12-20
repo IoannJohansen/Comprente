@@ -1,36 +1,68 @@
 package com.sachishin.comprente.Controller;
 
+import com.sachishin.comprente.DTO.AuthResponse;
+import com.sachishin.comprente.DTO.RegisterResponse;
+import com.sachishin.comprente.Exception.AuthException;
+import com.sachishin.comprente.Security.jwt.JwtProvider;
 import com.sachishin.comprente.Service.UserService;
 import com.sachishin.comprente.DTO.AuthRequest;
 import com.sachishin.comprente.DTO.RegisterRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/auth")
 public class AuthController {
 
+    private final UserService userService;
+    private final JwtProvider tokenProvider;
+
     @Autowired
-    UserService userService;
+    public AuthController(UserService userService, JwtProvider tokenProvider) {
+        this.userService = userService;
+        this.tokenProvider = tokenProvider;
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String Login(AuthRequest authRequest){
-
-        return "Logged in";
+    public ResponseEntity<?> Login(@Valid @RequestBody AuthRequest authRequest){
+        var authResponse = new AuthResponse();
+        try {
+            var user = userService.Login(authRequest);
+            String userName = authRequest.getLogin();
+            String token = tokenProvider.generateToken(userName);
+            authResponse.setRole(user.getRole());
+            authResponse.setToken(token);
+            authResponse.setSuccess(true);
+            authResponse.setUsername(authRequest.getLogin());
+            return new ResponseEntity<>(authResponse, HttpStatus.OK);
+        }catch (AuthException ex){
+            authResponse.setSuccess(false);
+            return new ResponseEntity<>(authResponse, HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String Register(@Valid @RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<?> Register(@Valid @RequestBody RegisterRequest registerRequest){
         var result = userService.CreateUser(registerRequest);
-        if(result==null){
-            return null;
+        var response = new RegisterResponse();
+        if(result!=null){
+            response.setRole(result.getRole());
+            response.setUsername(result.getUsername());
+            response.setRole(result.getRole());
+            response.setToken(tokenProvider.generateToken(result.getUsername()));
+            response.setSuccess(true);
         }else{
-            return "Success";
+            response.setSuccess(false);
         }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
 

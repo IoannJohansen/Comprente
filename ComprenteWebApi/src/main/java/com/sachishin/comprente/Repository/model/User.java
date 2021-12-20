@@ -22,7 +22,7 @@ import java.util.Collection;
 @Table(name = "Users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
 
     @NotNull

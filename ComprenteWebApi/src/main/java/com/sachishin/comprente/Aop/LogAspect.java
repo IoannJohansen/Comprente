@@ -1,4 +1,4 @@
-package com.sachishin.comprente.aop;
+package com.sachishin.comprente.Aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class LogAspect {
-    @Pointcut("execution(public * com.sachishin.comprente.Web.controller.AuthController.*(..))")
+    @Pointcut("execution(public * com.sachishin.comprente.Controller.AuthController.*(..))")
     public void callAtUserController() {
     }
 

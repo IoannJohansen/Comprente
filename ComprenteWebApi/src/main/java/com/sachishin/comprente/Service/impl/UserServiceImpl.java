@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
     public User Login(AuthRequest authDto) throws AuthException {
         var user = userRepository.findByUsername(authDto.getLogin());
         if(user==null)throw new AuthException();
+        user.getUsername();
         return user;
     }
 }

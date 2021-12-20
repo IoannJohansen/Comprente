@@ -1,5 +1,7 @@
 package com.sachishin.comprente.Repository.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,13 +17,14 @@ import javax.persistence.*;
 @Table(name = "Images")
 public class Images {
     @Id
-    @GeneratedValue
-    private int Id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long Id;
 
     @NotNull
     private String path;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(referencedColumnName = "id")
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "TechniqueId", nullable = false)
     private Technique technique;
 }

@@ -1,6 +1,8 @@
 package com.sachishin.comprente.Service.impl;
 
+import com.sachishin.comprente.DTO.UpdateTechniqueDto;
 import com.sachishin.comprente.Repository.TechinqueRepository;
+import com.sachishin.comprente.Repository.model.Images;
 import com.sachishin.comprente.Repository.model.Technique;
 import com.sachishin.comprente.Repository.model.User;
 import com.sachishin.comprente.Service.TechniqueService;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -29,7 +32,7 @@ public class TechniqueServiceImpl implements TechniqueService {
 
     @Override
     public void saveTechnique(Technique technique) {
-
+        techinqueRepository.save(technique);
     }
 
     @Override

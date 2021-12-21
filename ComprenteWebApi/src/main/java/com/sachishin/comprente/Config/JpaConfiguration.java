@@ -1,4 +1,4 @@
-package com.sachishin.comprente.config;
+package com.sachishin.comprente.Config;
 
 import java.util.Properties;
 

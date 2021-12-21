@@ -20,6 +20,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("api/auth")
+@CrossOrigin("*")
 public class AuthController {
 
     private final UserService userService;
@@ -37,15 +38,16 @@ public class AuthController {
         try {
             var user = userService.Login(authRequest);
             String userName = authRequest.getLogin();
-            String token = tokenProvider.generateToken(userName);
+            String token = tokenProvider.generateToken(userName, user.getId(), user.getRole());
             authResponse.setRole(user.getRole());
             authResponse.setToken(token);
             authResponse.setSuccess(true);
             authResponse.setUsername(authRequest.getLogin());
+            authResponse.setUserId(user.getId());
             return new ResponseEntity<>(authResponse, HttpStatus.OK);
         }catch (AuthException ex){
             authResponse.setSuccess(false);
-            return new ResponseEntity<>(authResponse, HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(authResponse, HttpStatus.OK);
         }
     }
 
@@ -56,9 +58,9 @@ public class AuthController {
         if(result!=null){
             response.setRole(result.getRole());
             response.setUsername(result.getUsername());
-            response.setRole(result.getRole());
-            response.setToken(tokenProvider.generateToken(result.getUsername()));
+            response.setToken(tokenProvider.generateToken(result.getUsername(), result.getId(), "USER"));
             response.setSuccess(true);
+            response.setUserId(result.getId());
         }else{
             response.setSuccess(false);
         }

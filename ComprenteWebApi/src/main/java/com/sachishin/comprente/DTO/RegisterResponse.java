@@ -13,5 +13,6 @@ public class RegisterResponse {
     Boolean success;
     String token;
     String username;
+    long userId;
     String role;
 }

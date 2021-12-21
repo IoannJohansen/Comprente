@@ -21,10 +21,11 @@ public class Images {
     private long Id;
 
     @NotNull
+    @Column(columnDefinition="nvarchar(max)")
     private String path;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "TechniqueId", nullable = false)
+    @JoinColumn(name = "TechniqueId", nullable = false, referencedColumnName = "Id")
     private Technique technique;
 }

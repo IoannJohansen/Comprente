@@ -10,11 +10,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor
@@ -25,18 +21,22 @@ import java.util.Set;
 public class Technique {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private long id;
 
     @NotNull
+    @Column(name = "Name")
     private String name;
 
     @NotNull
+    @Column(name = "Description", columnDefinition="nvarchar(max)")
     private String description;
 
     @NotNull
-    private java.sql.Date datePublish;
+    @Column(name = "PublishDate")
+    private Date datePublish;
 
     @NotNull
+    @Column(name = "RentPrice")
     private long rentPrice;
 
     @OnDelete(action = OnDeleteAction.CASCADE)

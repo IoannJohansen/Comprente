@@ -5,8 +5,8 @@ import java.util.List;
 
 public class PagedItemsResponse<T> {
 
-    public T[] Items;
+    public List<T> Items;
 
-    public int TotalCount;
+    public long TotalCount;
 
 }

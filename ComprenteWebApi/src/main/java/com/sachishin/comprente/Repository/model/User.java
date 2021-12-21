@@ -1,5 +1,6 @@
 package com.sachishin.comprente.Repository.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -23,12 +25,16 @@ import java.util.Collection;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private long id;
 
     @NotNull
     @Email
     @Size(min=4, max=30)
     private String email;
+
+    @JsonBackReference
+    @OneToMany(mappedBy="user")
+    private Set<Rent> rents;
 
     @NotNull
     private String role;
@@ -38,5 +44,6 @@ public class User {
     private String username;
 
     @NotNull
+    @JsonIgnore
     private String hashPassword;
 }

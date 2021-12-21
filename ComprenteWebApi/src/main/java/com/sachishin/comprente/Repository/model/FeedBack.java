@@ -1,37 +1,31 @@
 package com.sachishin.comprente.Repository.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Setter
+@Getter
 @Table(name = "Feedback")
 public class FeedBack {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(referencedColumnName = "Id")
+    @JoinColumn(name = "UserId", referencedColumnName = "Id")
     private User user;
-
-    //TODO: ADD RANGE(1,5)
-    @NotNull
-    @Min(1)
-    @Max(5)
-    private int rating;
 
     private String message;
 
+    @JsonIgnore
     @ManyToOne(optional = false)
-    @JoinColumn(referencedColumnName = "Id")
+    @JoinColumn(name = "TechniqueId", referencedColumnName = "Id")
     private Technique technique;
 }

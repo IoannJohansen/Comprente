@@ -1,11 +1,7 @@
 package com.sachishin.comprente.Service;
 
-import com.sachishin.comprente.DTO.UpdateTechniqueDto;
-import com.sachishin.comprente.Repository.model.Images;
 import com.sachishin.comprente.Repository.model.Technique;
-import com.sachishin.comprente.Repository.model.User;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface TechniqueService {
@@ -17,4 +13,8 @@ public interface TechniqueService {
     void updateTechnique(Technique technique);
     void deleteAllTechnique();
     boolean isTechniqueExist(Technique technique);
+    List<Technique> GetPaged(int pageNum, int pageSize);
+    long GetCount();
+    Technique GetTechniqueById(long id);
+    boolean TechIsRentable(long id);
 }

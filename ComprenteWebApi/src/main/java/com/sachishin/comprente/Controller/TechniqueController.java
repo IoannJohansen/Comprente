@@ -1,9 +1,12 @@
 package com.sachishin.comprente.Controller;
 
 import com.sachishin.comprente.DTO.CreateTechniqueRequestDto;
+import com.sachishin.comprente.DTO.FeedbackDto;
 import com.sachishin.comprente.DTO.PagedItemsResponse;
 import com.sachishin.comprente.DTO.UpdateTechniqueDto;
+import com.sachishin.comprente.Repository.model.FeedBack;
 import com.sachishin.comprente.Repository.model.Technique;
+import com.sachishin.comprente.Service.FeedbackService;
 import com.sachishin.comprente.Service.ImageService;
 import com.sachishin.comprente.Service.TechniqueService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,19 +30,24 @@ public class TechniqueController {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private FeedbackService feedbackService;
 
     @RequestMapping(value = "/getTechPaged", method = RequestMethod.GET)
     public PagedItemsResponse<Technique> GetTechniquePaged(int pageNum, int pageSize){
         var techniquePage = new PagedItemsResponse<Technique>();
-        techniquePage.TotalCount = techniqueService.findAllTechnique().size();
-        Technique[] items = Arrays.copyOfRange(techniqueService.findAllTechnique().toArray(Technique[]::new), pageNum*pageSize, (pageNum*pageSize)+pageSize);
-        techniquePage.Items = Arrays.stream(items).filter(Objects::nonNull).toArray(Technique[]::new);
+        techniquePage.TotalCount = techniqueService.GetCount();
+        techniquePage.Items = techniqueService.GetPaged(pageNum, pageSize);
         return techniquePage;
     }
 
     @RequestMapping(value = "/removeTechById", method = RequestMethod.DELETE)
     public ResponseEntity<?> RemoveTechById(@RequestParam long techId){
-        techniqueService.deleteTechniqueById(techId);
+        try{
+            techniqueService.deleteTechniqueById(techId);
+        }catch (Exception ex){
+            log.info("Techniques not found");
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -70,6 +78,32 @@ public class TechniqueController {
         newTech.setRentPrice(createDto.rentPrice);
         techniqueService.saveTechnique(newTech);
         imageService.AddImages(newTech, createDto.images);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/getTechniqueDescription", method = RequestMethod.GET)
+    public ResponseEntity<?> GetTechniqueById(@RequestParam long id){
+        var technique = techniqueService.GetTechniqueById(id);
+        return technique!=null?new ResponseEntity<>(technique, HttpStatus.OK):new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @RequestMapping(value = "/isRentable", method = RequestMethod.GET)
+    public boolean TechIsRentable(@RequestParam long id){
+        return techniqueService.TechIsRentable(id);
+    }
+
+    @RequestMapping(value = "/getTechniqueFeedbacksPaged", method = RequestMethod.GET)
+    public PagedItemsResponse<FeedBack> GetFeedbacksPaged(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam int techId){
+        var feedbackPage = new PagedItemsResponse<FeedBack>();
+        feedbackPage.TotalCount = feedbackService.GetCountOfTechFeedbacks(techId);
+        feedbackPage.Items = feedbackService.GetFeedbackPage(pageNum, pageSize, techId);
+        return feedbackPage;
+    }
+
+    @RequestMapping(value = "/addFeedback", method = RequestMethod.POST)
+    public ResponseEntity<?>AddFeedback(@RequestBody FeedbackDto feedback){
+        System.out.println(feedback);
+        feedbackService.AddFeedback(feedback);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

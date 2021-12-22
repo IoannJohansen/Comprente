@@ -10,7 +10,7 @@ import java.util.Collection;
 
 
 public interface ImageService {
-    void AddImages(Technique tech, Collection<ImageDto> images);
+    void AddImages(Technique tech, Collection<String> images);
     void RemoveByTechId(long techId);
-    void AddImagesToTechnique(long techId, Collection<ImageDto> images);
+    void AddImagesToTechnique(long techId, Collection<String> images);
 }

@@ -38,4 +38,42 @@ public class RentController {
         int rowsAffected = rentService.AddRent(UserId, TechId);
         return rowsAffected==1?new ResponseEntity<>(HttpStatus.OK):new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping(value = "/getActiveRentsPaged", method = RequestMethod.GET)
+    public PagedItemsResponse<?> GetActiveRents(@RequestParam int pageNum, @RequestParam int pageSize){
+        var userRentsPaged = new PagedItemsResponse<Rent>();
+        userRentsPaged.TotalCount = rentService.GetCountActiveRents();
+        userRentsPaged.Items = rentService.GetActiveRentsPaged(pageNum, pageSize);
+        return userRentsPaged;
+    }
+
+    @RequestMapping(value = "/changeRentStatus", method = RequestMethod.GET)
+    public ResponseEntity<?> ChangeRentStatus(@RequestParam long rentId, @RequestParam int newStatus){
+        switch (newStatus){
+            case 1:
+                rentService.RequestRent(rentId);
+                break;
+            case 2:
+                rentService.GiveRent(rentId);
+                break;
+            case 3:
+                rentService.CompleteRent(rentId);
+                break;
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/getCompletedRents", method = RequestMethod.GET)
+    public PagedItemsResponse<?> GetCompletedRents(@RequestParam int pageNum, @RequestParam int pageSize){
+        var userRentsPaged = new PagedItemsResponse<Rent>();
+        userRentsPaged.TotalCount = rentService.GetCountForRentStatus(3);
+        userRentsPaged.Items = rentService.GetCompletedRents(pageNum, pageSize);
+        return userRentsPaged;
+    }
+
+    @RequestMapping(value = "/getRentById", method = RequestMethod.GET)
+    public ResponseEntity<?> GetRentById(@RequestParam long rentId){
+        var rent = rentService.GetRentById(rentId);
+        return new ResponseEntity<>(rent, HttpStatus.OK);
+    }
 }

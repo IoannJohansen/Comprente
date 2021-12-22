@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,7 +20,7 @@ import java.util.Date;
 public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private long id;
 
     @JsonManagedReference
     @ManyToOne(optional = false)
@@ -27,6 +29,7 @@ public class Rent {
 
     @JsonManagedReference
     @ManyToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "techniqueId")
     private Technique technique;
 
@@ -35,8 +38,8 @@ public class Rent {
     private Date giveDate;
 
     @NotNull
-    @Column(name = "FinishDate")
-    private Date FinishRentDate;
+    @Column(name = "finishDate")
+    private Date finishRentDate;
 
     @Column(name = "RentStatus")
     private int rentStatus;

@@ -1,11 +1,13 @@
 package com.sachishin.comprente.Service.impl;
 
+import com.sachishin.comprente.DTO.UpdateTechniqueDto;
 import com.sachishin.comprente.Repository.TechniqueRepository;
 import com.sachishin.comprente.Repository.model.Technique;
 import com.sachishin.comprente.Service.TechniqueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,69 +18,69 @@ import java.util.List;
 public class TechniqueServiceImpl implements TechniqueService {
 
     @Autowired
-    private TechniqueRepository techinqueRepository;
+    private TechniqueRepository techniqueRepository;
 
     @Override
     public Technique findById(Long id) {
-        return techinqueRepository.getById(id);
+        return techniqueRepository.getById(id);
     }
 
     @Override
     public Technique findByName(String name) {
-        return techinqueRepository.findByName(name);
+        return techniqueRepository.findByName(name);
     }
 
     @Override
     public void saveTechnique(Technique technique) {
-        techinqueRepository.save(technique);
+        techniqueRepository.save(technique);
     }
 
     @Override
-    public void updateTechnique(Technique technique) {
-        techinqueRepository.save(technique);
+    public void updateTechnique(UpdateTechniqueDto updateDto) {
+        techniqueRepository.updateTechnique(updateDto.name, updateDto.description, updateDto.rentPrice, updateDto.Id);
     }
 
     @Override
     public void deleteTechniqueById(Long id) {
         try {
-            techinqueRepository.deleteById(id);
+            techniqueRepository.deleteById(id);
         }catch (Exception ex){
         }
     }
 
     @Override
     public void deleteAllTechnique() {
-        techinqueRepository.deleteAll();
+        techniqueRepository.deleteAll();
     }
 
     @Override
     public List<Technique> findAllTechnique() {
-        return techinqueRepository.findAll();
+        return techniqueRepository.findAll();
     }
 
     @Override
     public boolean isTechniqueExist(Technique technique) {
-        return techinqueRepository.existsById(technique.getId());
+        return techniqueRepository.existsById(technique.getId());
     }
 
     @Override
     public List<Technique> GetPaged(int pageNum, int pageSize) {
-        Pageable pageOfTechnique = PageRequest.of(pageNum, pageSize);
-        return techinqueRepository.findAll(pageOfTechnique).toList();
+        Pageable pageOfTechnique = PageRequest.of(pageNum, pageSize, Sort.by("Id").descending());
+        return techniqueRepository.findAll(pageOfTechnique).toList();
     }
 
     @Override
     public long GetCount() {
-        return techinqueRepository.count();
+        return techniqueRepository.count();
     }
 
     @Override
     public Technique GetTechniqueById(long id) {
-        return techinqueRepository.findById(id);
+        return techniqueRepository.findById(id);
     }
 
     @Override
     public boolean TechIsRentable(long id) {
-        return techinqueRepository.checkForRentAvailability(id)==0;
+        return techniqueRepository.checkForRentAvailability(id)==0;
     }
 }

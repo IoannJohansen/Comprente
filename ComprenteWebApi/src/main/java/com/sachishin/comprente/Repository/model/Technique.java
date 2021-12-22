@@ -1,11 +1,13 @@
 package com.sachishin.comprente.Repository.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -39,7 +41,12 @@ public class Technique {
     @Column(name = "RentPrice")
     private long rentPrice;
 
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @OneToMany(mappedBy = "technique", cascade = CascadeType.ALL)
+////    @JoinColumn(referencedColumnName = "TechniqueId")
+//    private Collection<FeedBack> feedBacks;
+
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @OneToMany(mappedBy = "technique", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "technique", cascade = CascadeType.ALL)
     private Collection<Images> images;
 }

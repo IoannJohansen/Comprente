@@ -15,13 +15,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Objects;
-
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Slf4j
 @RestController
 @RequestMapping("api/tech")
+@CrossOrigin("**")
 public class TechniqueController {
 
     @Autowired
@@ -43,6 +43,7 @@ public class TechniqueController {
 
     @RequestMapping(value = "/removeTechById", method = RequestMethod.DELETE)
     public ResponseEntity<?> RemoveTechById(@RequestParam long techId){
+        log.info("Delete: " + techId);
         try{
             techniqueService.deleteTechniqueById(techId);
         }catch (Exception ex){
@@ -55,14 +56,9 @@ public class TechniqueController {
     public ResponseEntity<?> UpdateTechnique(@RequestBody UpdateTechniqueDto updateDto){
         var techById = techniqueService.findById(updateDto.Id);
         if (techniqueService.isTechniqueExist(techById)){
-            techniqueService.deleteTechniqueById(updateDto.Id);
-            var newTech = new Technique();
-            newTech.setDescription(updateDto.description);
-            newTech.setDatePublish(updateDto.datePublish);
-            newTech.setName(updateDto.name);
-            newTech.setRentPrice(updateDto.rentPrice);
-            techniqueService.saveTechnique(newTech);
-            imageService.AddImages(newTech, updateDto.images);
+                techniqueService.updateTechnique(updateDto);
+                imageService.RemoveByTechId(techById.getId());
+                imageService.AddImagesToTechnique(techById.getId(), updateDto.images);
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -73,7 +69,7 @@ public class TechniqueController {
     public ResponseEntity<?> CreateTechnique(@RequestBody CreateTechniqueRequestDto createDto){
         var newTech = new Technique();
         newTech.setDescription(createDto.description);
-        newTech.setDatePublish(createDto.datePublish);
+        newTech.setDatePublish(Date.valueOf(LocalDate.now()));
         newTech.setName(createDto.name);
         newTech.setRentPrice(createDto.rentPrice);
         techniqueService.saveTechnique(newTech);

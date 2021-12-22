@@ -14,5 +14,5 @@ public class UpdateTechniqueDto {
 
     public long rentPrice;
 
-    public Collection<ImageDto> images;
+    public Collection<String> images;
 }

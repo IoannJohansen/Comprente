@@ -13,12 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TechniqueRepository extends JpaRepository<Technique, Long> {
     Technique findByName(String name);
     Technique findById(long id);
-    @Query(value = "select count(*) from Rents where RentStatus = 2 or RentStatus = 1 and TechniqueId = :TechId", nativeQuery = true)
+
+    @Query(value = "select count(*) from Rents where (Rents.RentStatus = 2 or Rents.RentStatus = 1) and Rents.techniqueId = :TechId", nativeQuery = true)
     long checkForRentAvailability(@Param("TechId") long id);
 
     @Modifying
     @Query(value = "update Technique set Name = :name, Description = :description, RentPrice = :rentCost where id = :id", nativeQuery = true)
     int updateTechnique(@Param("name") String name, @Param("description") String description, @Param("rentCost") long rentCost, @Param("id") long Id );
-
-
 }

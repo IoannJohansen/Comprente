@@ -44,6 +44,11 @@ public class Bill {
     @JoinColumn(referencedColumnName = "Id", name = "technique_id")
     private Technique technique;
 
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "Id", name = "rent_id")
+    private Rent rent;
+
+
     @NotNull
     private Date billingDate;
 }

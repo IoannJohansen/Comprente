@@ -19,4 +19,6 @@ public interface TechniqueRepository extends JpaRepository<Technique, Long> {
     @Modifying
     @Query(value = "update Technique set Name = :name, Description = :description, RentPrice = :rentCost where id = :id", nativeQuery = true)
     int updateTechnique(@Param("name") String name, @Param("description") String description, @Param("rentCost") long rentCost, @Param("id") long Id );
+
+
 }

@@ -20,7 +20,6 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("api/auth")
-@CrossOrigin("*")
 public class AuthController {
 
     private final UserService userService;

@@ -64,8 +64,28 @@ public class TechniqueServiceImpl implements TechniqueService {
     }
 
     @Override
-    public List<Technique> GetPaged(int pageNum, int pageSize) {
-        Pageable pageOfTechnique = PageRequest.of(pageNum, pageSize, Sort.by("Id").descending());
+    public List<Technique> GetPaged(int pageNum, int pageSize, String sortOrder, int sortMode) {
+        Pageable pageOfTechnique = PageRequest.of(pageNum, pageSize, Sort.by("name").descending());
+        switch (sortOrder){
+            case "asc":
+                if (sortMode==1){
+                    pageOfTechnique = PageRequest.of(pageNum, pageSize, Sort.by("name").ascending());
+                }else if (sortMode==2){
+                    pageOfTechnique = PageRequest.of(pageNum, pageSize, Sort.by("rentPrice").ascending());
+                }else{
+                    pageOfTechnique = PageRequest.of(pageNum, pageSize, Sort.by("datePublish").ascending());
+                }
+                break;
+            case "desc":
+                if (sortMode==1){
+                    pageOfTechnique = PageRequest.of(pageNum, pageSize, Sort.by("name").descending());
+                }else if (sortMode==2){
+                    pageOfTechnique = PageRequest.of(pageNum, pageSize, Sort.by("rentPrice").descending());
+                }else{
+                    pageOfTechnique = PageRequest.of(pageNum, pageSize, Sort.by("datePublish").descending());
+                }
+                break;
+        }
         return techniqueRepository.findAll(pageOfTechnique).toList();
     }
 

@@ -2,6 +2,7 @@ package com.sachishin.comprente.Service;
 
 import com.sachishin.comprente.DTO.UpdateTechniqueDto;
 import com.sachishin.comprente.Repository.model.Technique;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface TechniqueService {
     void updateTechnique(UpdateTechniqueDto updateDto);
     void deleteAllTechnique();
     boolean isTechniqueExist(Technique technique);
-    List<Technique> GetPaged(int pageNum, int pageSize);
+    List<Technique> GetPaged(int pageNum, int pageSize, String sortOrder, int sortMode);
     long GetCount();
     Technique GetTechniqueById(long id);
     boolean TechIsRentable(long id);

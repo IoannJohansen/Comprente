@@ -6,7 +6,6 @@ import com.sachishin.comprente.Repository.model.Bill;
 import com.sachishin.comprente.Service.BillService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("api/bill")
-@CrossOrigin("**")
 public class BillController {
     @Autowired
     private BillService billService;

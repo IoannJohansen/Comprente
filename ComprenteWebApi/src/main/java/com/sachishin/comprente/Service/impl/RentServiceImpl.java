@@ -4,7 +4,6 @@ import com.sachishin.comprente.Repository.RentRepository;
 import com.sachishin.comprente.Repository.model.Rent;
 import com.sachishin.comprente.Service.RentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

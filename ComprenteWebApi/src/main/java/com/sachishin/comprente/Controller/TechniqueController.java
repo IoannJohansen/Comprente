@@ -21,7 +21,6 @@ import java.time.LocalDate;
 @Slf4j
 @RestController
 @RequestMapping("api/tech")
-@CrossOrigin("**")
 public class TechniqueController {
 
     @Autowired
@@ -34,10 +33,10 @@ public class TechniqueController {
     private FeedbackService feedbackService;
 
     @RequestMapping(value = "/getTechPaged", method = RequestMethod.GET)
-    public PagedItemsResponse<Technique> GetTechniquePaged(int pageNum, int pageSize){
+    public PagedItemsResponse<Technique> GetTechniquePaged(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam String sortOrder, @RequestParam int sortMode){
         var techniquePage = new PagedItemsResponse<Technique>();
         techniquePage.TotalCount = techniqueService.GetCount();
-        techniquePage.Items = techniqueService.GetPaged(pageNum, pageSize);
+        techniquePage.Items = techniqueService.GetPaged(pageNum, pageSize, sortOrder, sortMode);
         return techniquePage;
     }
 

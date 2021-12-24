@@ -41,11 +41,6 @@ public class Technique {
     @Column(name = "RentPrice")
     private long rentPrice;
 
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @OneToMany(mappedBy = "technique", cascade = CascadeType.ALL)
-////    @JoinColumn(referencedColumnName = "TechniqueId")
-//    private Collection<FeedBack> feedBacks;
-
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "technique", cascade = CascadeType.ALL)
     private Collection<Images> images;

@@ -22,6 +22,7 @@ public class FeedBack {
     private long Id;
 
     @ManyToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "UserId", referencedColumnName = "Id")
     private User user;
 

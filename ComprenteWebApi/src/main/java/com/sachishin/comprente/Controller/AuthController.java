@@ -3,6 +3,7 @@ package com.sachishin.comprente.Controller;
 import com.sachishin.comprente.DTO.AuthResponse;
 import com.sachishin.comprente.DTO.RegisterResponse;
 import com.sachishin.comprente.Exception.AuthException;
+import com.sachishin.comprente.Exception.DuplicateUserException;
 import com.sachishin.comprente.Security.jwt.JwtProvider;
 import com.sachishin.comprente.Service.UserService;
 import com.sachishin.comprente.DTO.AuthRequest;
@@ -32,26 +33,26 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> Login(@Valid @RequestBody AuthRequest authRequest){
+    public ResponseEntity<?> Login(@Valid @RequestBody AuthRequest authRequest) throws AuthException {
         var authResponse = new AuthResponse();
-        try {
-            var user = userService.Login(authRequest);
-            String userName = authRequest.getLogin();
-            String token = tokenProvider.generateToken(userName, user.getId(), user.getRole());
-            authResponse.setRole(user.getRole());
-            authResponse.setToken(token);
-            authResponse.setSuccess(true);
-            authResponse.setUsername(authRequest.getLogin());
-            authResponse.setUserId(user.getId());
-            return new ResponseEntity<>(authResponse, HttpStatus.OK);
-        }catch (AuthException ex){
-            authResponse.setSuccess(false);
-            return new ResponseEntity<>(authResponse, HttpStatus.OK);
-        }
+//        try {
+          var user = userService.Login(authRequest);
+          String userName = authRequest.getLogin();
+          String token = tokenProvider.generateToken(userName, user.getId(), user.getRole());
+          authResponse.setRole(user.getRole());
+          authResponse.setToken(token);
+          authResponse.setSuccess(true);
+          authResponse.setUsername(authRequest.getLogin());
+          authResponse.setUserId(user.getId());
+          return new ResponseEntity<>(authResponse, HttpStatus.OK);
+//        }catch (AuthException ex){
+//            authResponse.setSuccess(false);
+//            return new ResponseEntity<>(authResponse, HttpStatus.OK);
+//        }
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<?> Register(@Valid @RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<?> Register(@Valid @RequestBody RegisterRequest registerRequest) throws DuplicateUserException {
         var result = userService.CreateUser(registerRequest);
         var response = new RegisterResponse();
         if(result!=null){

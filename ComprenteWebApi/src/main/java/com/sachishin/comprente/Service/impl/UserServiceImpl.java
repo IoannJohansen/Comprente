@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User CreateUser(RegisterRequest registerDto) throws DuplicateUserException {
-//        try{
           var user = userRepository.findByUsername(registerDto.getLogin());
           if(user!=null)throw new DuplicateUserException("Duplicate username");
           var newUser = new User();
@@ -38,9 +37,7 @@ public class UserServiceImpl implements UserService {
           newUser.setHashPassword(passwordEncoder.encode(registerDto.getPassword()));
           userRepository.save(newUser);
           return newUser;
-//        }catch(DuplicateUserException ex){
-//            return null;
-//        }
+//
     }
 
     @Override

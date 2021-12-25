@@ -43,7 +43,7 @@ public class BillController {
     }
 
     @RequestMapping(value = "/addBill", method = RequestMethod.POST)
-    public ResponseEntity<?> GetUserBillsPaged(@RequestBody BillRequest billRequest){
+    public ResponseEntity<?> AddBill(@RequestBody BillRequest billRequest){
         billService.AddBill(billRequest);
         String email = userService.findByUsername(billRequest.UserName).getEmail();
         mailSenderService.send(email, "Счет за аренду", "Всеуважаемый, "+billRequest.UserName+"!, Согласно договору аренды, заключенному" + billRequest.TotalDays +" дней назад, по тарифу " + billRequest.rentCostPerDay + ", вам выставлен счет на сумму "+billRequest.TotalCost+"$USD. ");

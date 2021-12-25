@@ -3,6 +3,7 @@ package com.sachishin.comprente.Repository.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sachishin.comprente.Validation.LoginConstraint;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class User {
     private long id;
 
     @NotNull
-    @Email
+    @Email(message = "Bad value of email")
     @Size(min=4, max=30)
     private String email;
 
@@ -40,6 +41,7 @@ public class User {
     private String role;
 
     @NotNull
+    @LoginConstraint
     @Size(min=5, max=30)
     private String username;
 

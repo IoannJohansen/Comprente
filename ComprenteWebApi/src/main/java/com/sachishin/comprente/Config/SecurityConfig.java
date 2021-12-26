@@ -40,10 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                    .antMatchers("/api/tech/getTechPaged", "/api/tech/getTechniqueDescription", "/api/tech/isRentable").permitAll()
+                    .antMatchers("/api/tech/getTechPaged", "/api/tech/getTechniqueDescription", "/api/tech/isRentable", "/swagger-ui/*").permitAll()
                 .antMatchers("/api/tech/getRentById", "/api/tech/getTechniqueFeedbacksPaged", "/api/tech/addFeedback").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/api/tech/getUserBills", "/api/tech/getUserRentsPaged", "/api/tech/getUserRentsHistoryPaged", "/api/tech/requestRent", "/api/tech/getCompletedRents", "/api/tech/", "/api/tech/").hasAuthority("USER")
-                .antMatchers("/api/tech/GetAllBillsPaged", "/api/tech/addBill", "/api/tech/getActiveRentsPaged", "/api/tech/changeRentStatus", "/api/tech/removeTechById", "/api/tech/updateTech", "/api/tech/createTechnique").hasAuthority("ADMIN")
+                .antMatchers("/api/tech/getUserBills", "/api/tech/getUserRentsPaged", "/api/tech/getUserRentsHistoryPaged", "/api/tech/requestRent", "/api/tech/getCompletedRents").hasAuthority("USER")
+                .antMatchers("/api/tech/GetAllBillsPaged", "/api/tech/addBill", "/api/tech/getActiveRentsPaged", "/api/tech/changeRentStatus", "/api/tech/removeTechById", "/api/tech/updateTech", "/api/tech/createTechnique", "/api/bill/getCommonBills").hasAuthority("ADMIN")
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }

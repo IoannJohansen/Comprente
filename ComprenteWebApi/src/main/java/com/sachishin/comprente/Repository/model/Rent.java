@@ -24,6 +24,7 @@ public class Rent {
 
     @JsonManagedReference
     @ManyToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "UserId")
     private User user;
 

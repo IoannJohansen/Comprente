@@ -11,7 +11,7 @@ public class UsernameValidator implements ConstraintValidator<LoginConstraint, S
 
     @Override
     public boolean isValid(String contactField, ConstraintValidatorContext cxt) {
-        return contactField != null && (contactField.length() >= 5) && (contactField.length() <= 30);
+        return contactField != null && (contactField.length() >= 4) && (contactField.length() <= 12);
     }
 }
 

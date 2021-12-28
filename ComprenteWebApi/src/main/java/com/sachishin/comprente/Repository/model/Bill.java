@@ -40,6 +40,7 @@ public class Bill {
 
     @ManyToOne(optional = false)
     @JoinColumn(referencedColumnName = "Id", name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @ManyToOne
